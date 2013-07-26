@@ -1,0 +1,48 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Viewbox x:Key="FolderIcon">
+        <Grid Margin="2">
+            <Path Data="M24.864858,12.080176L54.20555,19.439308 62.235778,19.439308C63.395721,19.439308,64.175765,20.369146,63.965804,21.519178L59.105697,48.306552C58.89561,49.44633,57.775584,50.386176,56.615646,50.386176L7.384443,50.386176C6.2243806,50.386176,5.1043579,49.44633,4.8942691,48.306552L0.03416351,21.519178C-0.17580256,20.369146,0.60424605,19.439308,1.7641869,19.439308L20.09472,19.439308z M7.5002266,0L24.571481,0C25.801572,0,26.801644,0.99966049,26.801644,2.2292423L26.801644,6.4977927 58.723991,6.4977927 58.723991,14.375117 51.143432,14.375117 22.481328,7.1875591 17.820985,14.375117 5.2700636,14.375117 5.2700636,7.517446 5.2700636,6.4977927 5.2700636,2.2292423C5.2700631,0.99966049,6.2601358,0,7.5002266,0z" Stretch="Uniform" Fill="#FF606060" Width="24" Height="24" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
+                <Path.RenderTransform>
+                    <TransformGroup>
+                        <TransformGroup.Children>
+                            <RotateTransform Angle="0" />
+                            <ScaleTransform ScaleX="1" ScaleY="1" />
+                        </TransformGroup.Children>
+                    </TransformGroup>
+                </Path.RenderTransform>
+            </Path>
+        </Grid>
+    </Viewbox>
+    
+    <Viewbox x:Key="RunIcon">
+        <Grid>
+            <Grid Width="24" Height="24" Visibility="Collapsed" />
+            <Path Data="F1M1188.2,1715.23L1169.93,1728.57 1151.66,1741.9 1151.66,1715.23 1151.66,1688.57 1169.93,1701.9 1188.2,1715.23z" Stretch="Uniform" Fill="#FF4A893E" Width="12" Height="12" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
+                <Path.RenderTransform>
+                    <TransformGroup>
+                        <TransformGroup.Children>
+                            <RotateTransform Angle="0" />
+                            <ScaleTransform ScaleX="1" ScaleY="1" />
+                        </TransformGroup.Children>
+                    </TransformGroup>
+                </Path.RenderTransform>
+            </Path>
+        </Grid>
+    </Viewbox>
+
+    <Viewbox x:Key="StopIcon">
+        <Grid>
+            <Path Data="M0,0L64,0 64,64 0,64z" Stretch="Uniform" Fill="#FFD25151" Width="16" Height="16" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
+                <Path.RenderTransform>
+                    <TransformGroup>
+                        <TransformGroup.Children>
+                            <RotateTransform Angle="0" />
+                            <ScaleTransform ScaleX="1" ScaleY="1" />
+                        </TransformGroup.Children>
+                    </TransformGroup>
+                </Path.RenderTransform>
+            </Path>
+        </Grid>
+    </Viewbox>
+</ResourceDictionary>

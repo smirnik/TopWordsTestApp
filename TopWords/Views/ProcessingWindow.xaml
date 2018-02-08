@@ -5,7 +5,7 @@
         xmlns:tasks="clr-namespace:System.Threading.Tasks;assembly=mscorlib"
         DataContext="{Binding RelativeSource={RelativeSource Self}, Path=ViewModel}"
         x:Name="root"
-        Title="TopWords - Поиск слов" Height="381" Width="454" SizeToContent="Height" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="TopWords - Search" Height="381" Width="454" SizeToContent="Height" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <topWordsTestApp:PercentToWidthConverter x:Key="percentToWidthConverter"></topWordsTestApp:PercentToWidthConverter>
         
@@ -103,7 +103,7 @@
         </Grid>
         
         <Border Grid.Row="2" Grid.ColumnSpan="2" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}">
-            <Expander Header="Подробно"  Padding="5" IsExpanded="False" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}">
+            <Expander Header="Details"  Padding="5" IsExpanded="False" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -118,19 +118,19 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     
-                    <Label Content="Количество файлов:" />
+                    <Label Content="Files count:" />
                     <TextBlock Grid.Column="1" Style="{StaticResource valueTextStyle}" Text="{Binding FilesCount}"></TextBlock>
 
-                    <Label Grid.Row="1" Content="Обработано файлов:" />
+                    <Label Grid.Row="1" Content="Processed files:" />
                     <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource valueTextStyle}" Text="{Binding ProcessedCount}"></TextBlock>
 
-                    <Label Grid.Column="2" Content="Ошибок:" />
+                    <Label Grid.Column="2" Content="Errors:" />
                     <TextBlock Grid.Column="3" Style="{StaticResource valueTextStyle}" Text="{Binding FauledCount}"></TextBlock>
 
-                    <Label Grid.Row="1" Grid.Column="2" Content="Найдено слов:" />
+                    <Label Grid.Row="1" Grid.Column="2" Content="Found words:" />
                     <TextBlock Grid.Row="1" Grid.Column="3" Style="{StaticResource valueTextStyle}" Text="{Binding WordsCount}"></TextBlock>
 
-                    <Label Grid.Row="2" Content="Лог:" />
+                    <Label Grid.Row="2" Content="Log:" />
                     <TextBox Grid.Row="3" Grid.ColumnSpan="4" TextWrapping="Wrap" Padding="5" Height="150" x:Name="logTextBox" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"/>
                 </Grid>
             </Expander>

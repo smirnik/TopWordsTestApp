@@ -14,7 +14,7 @@ namespace TopWordsTestApp.ViewModels
         private ProgressInfo _progressInfo;
         private Task<IEnumerable<KeyValuePair<string, int>>> _task;
         private CancellationTokenSource _cancallationToken;
-        private ObservableCollection<KeyValuePair<string, int>> _wordsList;
+        private readonly ObservableCollection<KeyValuePair<string, int>> _wordsList;
         private int _maxCount;
         private string _description;
 
@@ -39,17 +39,14 @@ namespace TopWordsTestApp.ViewModels
 
         private void ProgressInfoOnUpdate()
         {
-            Description = string.Format("Обработано {0} из {1} файлов", ProcessedCount, FilesCount);
+            Description = $"Processed {ProcessedCount} of {FilesCount} files";
             NotifyPropertyChanged(string.Empty);
             OnLog(ProgressInfo.LastFileName);
         }
 
-        /// <summary>
-        /// Ход выполнения поиска
-        /// </summary>
         public ProgressInfo ProgressInfo
         {
-            get { return _progressInfo; }
+            get => _progressInfo;
             set
             {
                 _progressInfo = value;
@@ -57,44 +54,17 @@ namespace TopWordsTestApp.ViewModels
             }
         }
 
-        /// <summary>
-        /// Количество файлов
-        /// </summary>
-        public int FilesCount
-        {
-            get { return ProgressInfo.FilesCount; }
-        }
+        public int FilesCount => ProgressInfo.FilesCount;
 
-        /// <summary>
-        /// Количество обработаных файлов
-        /// </summary>
-        public int ProcessedCount
-        {
-            get { return ProgressInfo.ProcessedCount; }
-        }
+        public int ProcessedCount => ProgressInfo.ProcessedCount;
 
-        /// <summary>
-        /// Количество ошибок
-        /// </summary>
-        public int FauledCount
-        {
-            get { return ProgressInfo.FauledCount; }
-        }
+        public int FauledCount => ProgressInfo.FauledCount;
 
-        /// <summary>
-        /// Количество слов
-        /// </summary>
-        public int WordsCount
-        {
-            get { return ProgressInfo.WordsCount; }
-        }
+        public int WordsCount => ProgressInfo.WordsCount;
 
-        /// <summary>
-        /// Частота самого встречаемого слова
-        /// </summary>
         public int MaxCount
         {
-            get { return _maxCount; }
+            get => _maxCount;
             set
             {
                 _maxCount = value;
@@ -102,9 +72,6 @@ namespace TopWordsTestApp.ViewModels
             }
         }
 
-        /// <summary>
-        /// Статус выполнения процесса обработки
-        /// </summary>
         public string Status
         {
             get
@@ -115,28 +82,22 @@ namespace TopWordsTestApp.ViewModels
                 switch (_task.Status)
                 {
                     case TaskStatus.Canceled:
-                        return "Отменено";
+                        return "Canceled";
                     case TaskStatus.Running:
-                        return string.Format("{0}% Завершено",
-                                             FilesCount > 0
-                                                 ? Math.Truncate(((double) ProcessedCount/FilesCount)*100)
-                                                 : 0);
+                        return $"{(FilesCount > 0 ? Math.Truncate(((double) ProcessedCount / FilesCount) * 100) : 0)}% Completed";
                     case TaskStatus.Faulted:
-                        return "Ошибка";
+                        return "Error";
                     case TaskStatus.RanToCompletion:
-                        return "Завершено";
+                        return "Completed";
                     default:
                         return string.Empty;
                 }
             }
         }
 
-        /// <summary>
-        /// Описание статуса обработки
-        /// </summary>
         public string Description
         {
-            get { return _description; }
+            get => _description;
             set
             {
                 _description = value;
@@ -144,38 +105,17 @@ namespace TopWordsTestApp.ViewModels
             }
         }
 
-        /// <summary>
-        /// Обработка активна
-        /// </summary>
-        public bool IsRunning
-        {
-            get { return _task != null && _task.Status == TaskStatus.Running; }
-        }
+        public bool IsRunning => _task != null && _task.Status == TaskStatus.Running;
 
-        /// <summary>
-        /// Результат работы (слово - количество)
-        /// </summary>
-        public ObservableCollection<KeyValuePair<string, int>> WordsList
-        {
-            get { return _wordsList; }
-        }
+        public ObservableCollection<KeyValuePair<string, int>> WordsList => _wordsList;
 
-        /// <summary>
-        /// Событие для логирования хода выполнения
-        /// </summary>
         public event Action<string> Log;
 
         protected virtual void OnLog(string obj)
         {
-            Action<string> handler = Log;
-            if (handler != null) handler(obj);
+            Log?.Invoke(obj);
         }
 
-        /// <summary>
-        /// Начать поиск в заданой папке
-        /// </summary>
-        /// <param name="path">Путь к папке</param>
-        /// <param name="isSearchInSubfolders">Искать в подпапках</param>
         public void Run(string path, bool isSearchInSubfolders)
         {
             if (_cancallationToken != null)
@@ -187,29 +127,23 @@ namespace TopWordsTestApp.ViewModels
             _task = FrequencyAnalisator.GetTopWords(_cancallationToken, ProgressInfo, path, isSearchInSubfolders);
             _task.Start();
             var scheduler = TaskScheduler.FromCurrentSynchronizationContext();
-            //при успешном завершении
+            
             _task.ContinueWith(GetResult, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion,
                                scheduler);
-            //при любом завершии
+            //on error
             _task.ContinueWith(ProcessingCompleated, scheduler);
 
-            OnLog("Начало поиска в директории " + path);
+            OnLog("Starting search in folder " + path);
             NotifyPropertyChanged(string.Empty);
 
         }
 
-        public TaskStatus TaskStatus
-        {
-            get
-            {
-                return _task != null ? _task.Status : TaskStatus.Created;
-            }
-        }
+        public TaskStatus TaskStatus => _task?.Status ?? TaskStatus.Created;
 
         private void ProcessingCompleated(Task<IEnumerable<KeyValuePair<string, int>>> task)
         {
             _cancallationToken = null;
-            OnLog(string.Format("Поиск завершен со статусом '{0}'", task.Status));
+            OnLog($"Finished with status '{task.Status}'");
             if (task.Status == TaskStatus.Faulted)
             {
                 if (task.Exception != null && task.Exception.InnerExceptions.Any())
@@ -234,19 +168,13 @@ namespace TopWordsTestApp.ViewModels
             }
         }
 
-        /// <summary>
-        /// Команда отмены поиска
-        /// </summary>
         public ICommand CancelProcessingCommand { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         

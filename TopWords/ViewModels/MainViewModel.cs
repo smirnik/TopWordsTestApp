@@ -19,9 +19,6 @@ namespace TopWordsTestApp.ViewModels
             Path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         }
 
-        /// <summary>
-        /// Путь до директории с текстовыми файлами
-        /// </summary>
         public string Path
         {
             get { return _path; }
@@ -32,28 +29,13 @@ namespace TopWordsTestApp.ViewModels
             }
         }
 
-        /// <summary>
-        /// Команда выбора директории
-        /// </summary>
-        public ICommand SelectPathCommand
-        {
-            get { return _selectPathCommand.Value; }
-        }
+        public ICommand SelectPathCommand => _selectPathCommand.Value;
 
-        /// <summary>
-        /// Команда запуска поиска сымых часто встречаемых слов
-        /// </summary>
-        public ICommand RunCommand
-        {
-            get { return _runCommand.Value; }
-        }
+        public ICommand RunCommand => _runCommand.Value;
 
-        /// <summary>
-        /// Искать во вложенных директориях
-        /// </summary>
         public bool IsSearchInSubfolders
         {
-            get { return _isSearchInSubfolders; }
+            get => _isSearchInSubfolders;
             set
             {
                 _isSearchInSubfolders = value;
@@ -73,7 +55,7 @@ namespace TopWordsTestApp.ViewModels
             var dialog = new FolderBrowserDialog
                 {
                     ShowNewFolderButton = false,
-                    Description = "Выберите директорию для поиска текстовых файлов",
+                    Description = "Select folder with text files",
                     SelectedPath = Path,
                 };
             if (dialog.ShowDialog() == DialogResult.OK)
@@ -86,10 +68,7 @@ namespace TopWordsTestApp.ViewModels
 
         private void NotifyPropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

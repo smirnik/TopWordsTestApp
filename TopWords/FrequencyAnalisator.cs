@@ -13,13 +13,13 @@ namespace TopWordsTestApp
     public class FrequencyAnalisator
     {
         /// <summary>
-        /// Возврашает поток для поиска самые часто встречаемые слова в указаной папке
+        /// A task that returns the most common words in the specified folder
         /// </summary>
         /// <param name="cancellationTokenSource">CancellationTokenSource</param>
-        /// <param name="progressInfo">Структура для отслеживание процесс выполнения</param>
-        /// <param name="path">Путь к папке</param>
-        /// <param name="searchInSubfolders">Искать в подпапках</param>
-        /// <param name="wordsCount">Количество слов</param>
+        /// <param name="progressInfo">Progress information</param>
+        /// <param name="path">Folder path</param>
+        /// <param name="searchInSubfolders">Search in subfolders</param>
+        /// <param name="wordsCount">Words count to return</param>
         /// <returns></returns>
         public static Task<IEnumerable<KeyValuePair<string, int>>> GetTopWords(
             CancellationTokenSource cancellationTokenSource, ProgressInfo progressInfo, string path,

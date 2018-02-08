@@ -5,7 +5,7 @@ using System.Windows.Data;
 namespace TopWordsTestApp
 {
     /// <summary>
-    /// Вычисляет и реобразует проценты в ширину
+    /// Converts percentage to width
     /// </summary>
     internal class PercentToWidthConverter : IMultiValueConverter
     {
